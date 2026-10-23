@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    padding: 30px 15px;
+}
+.container {
+    max-width: 500px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px #30205a55;
+}
+h1, .subtitle {
+    text-align: center;
+}
+h1 {
+    color: #6045a8;
+    font-size: 27px;
+}
+.subtitle {
+    color: #777;
+    margin: 10px 0 25px;
+}
+
+h3 {
+    color: #6045a8;
+    margin: 20px 0 15px;
+}
+label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: bold;
+    color: #333;
+}
+input {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    outline: none;
+}
+input:focus {
+    border-color: #764ba2;
+}
+button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 22px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 16px;
+}
+button:hover {
+    opacity: 0.9;
+}
+#message {
+    color: #d93025;
+    margin-top: 15px;
+    text-align: center;
+}
+.result {
+    display: none;
+    margin-top: 25px;
+    padding: 18px;
+    background: #f3efff;
+    border-radius: 10px;
+}
+.result h2 {
+    color: #6045a8;
+    margin-bottom: 15px;
+}
+.result p {
+    margin: 12px 0;
+    color: #333;
+}
+.result span {
+    font-weight: bold;
+}
+@media (max-width: 480px) {
+    .container {
+        padding: 18px;
+    }
+
+    h1 {
+        font-size: 23px;
+    }
+}
