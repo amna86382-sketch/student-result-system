@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,40 +10,72 @@
 <body>
     <div class="container">
         <h1>Student Result System</h1>
-        <p class="subtitle">Calculate your academic result</p>
+        <p class="subtitle">Enter student details and calculate result</p>
         <form id="resultForm">
-            <label for="studentName">Student Name</label>
-            <input type="text" id="studentName" placeholder="Enter student name">
-
-            <h3>Enter Subject Marks</h3>
-
-            <label for="english">English (100)</label>
-            <input type="number" id="english" placeholder="Enter English marks">
-
-            <label for="math">Mathematics (100)</label>
-            <input type="number" id="math" placeholder="Enter Mathematics marks">
-
-            <label for="computer">Computer (100)</label>
-            <input type="number" id="computer" placeholder="Enter Computer marks">
-
-            <label for="science">Science (100)</label>
-            <input type="number" id="science" placeholder="Enter Science marks">
-
-            <label for="urdu">Urdu (100)</label>
-            <input type="number" id="urdu" placeholder="Enter Urdu marks">
-
+            <div class="form-group">
+                <label for="studentName">Student Name</label>
+                <input
+                    type="text"
+                    id="studentName"
+                    placeholder="Enter student name" required >
+            </div>
+            <div class="form-group">
+                <label for="english">English (100)</label>
+                <input
+                    type="number"
+                    id="english"
+                    placeholder="Enter English marks"
+                    min="0"
+                    max="100"required>
+            </div>
+            <div class="form-group">
+                <label for="math">Math (100)</label>
+                <input
+                  type="number"
+                    id="math"
+                    placeholder="Enter Math marks"
+                    min="0"
+                    max="100"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="computer">Computer (100)</label>
+                <input
+                    type="number"
+                    id="computer"
+                    placeholder="Enter Computer marks"
+                    min="0"
+                    max="100"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="science">Science (100)</label>
+                <input
+                    type="number"
+                    id="science"
+                    placeholder="Enter Science marks"
+                    min="0"
+                    max="100"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="urdu">Urdu (100)</label>
+                <input
+                    type="number"
+                    id="urdu"
+                    placeholder="Enter Urdu marks"
+                    min="0"
+                    max="100"
+                    required
+                >
+            </div>
             <button type="submit">Calculate Result</button>
         </form>
-        <p id="message"></p>
-        <div id="result" class="result">
-            <h2>Student Result</h2>
-            <p>Student Name: <span id="showName"></span></p>
-            <p>Total Marks: <span id="totalMarks"></span></p>
-            <p>Obtained Marks: <span id="obtainedMarks"></span></p>
-            <p>Percentage: <span id="percentage"></span></p>
-            <p>Grade: <span id="grade"></span></p>
-            <p>Status: <span id="status"></span></p>
-        </div>
+        <p id="message" role="status"></p>
+        <section class="results-section">
+            <h2>Saved Student Results</h2>
+            <div id="resultList"></div>
+        </section>
     </div>
     <script src="script.js"></script>
 </body>

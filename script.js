@@ -1,18 +1,65 @@
 const resultForm = document.getElementById("resultForm");
 const message = document.getElementById("message");
-const result = document.getElementById("result");
-// Form submit hone par result calculate hoga
+const resultList = document.getElementById("resultList");
+// LocalStorage se saved results lena
+let savedResults = [];
+try {
+    savedResults = JSON.parse(
+        localStorage.getItem("studentResults")
+    ) || [];
+
+    if (!Array.isArray(savedResults)) {
+        savedResults = [];
+    }
+} catch (error) {
+    savedResults = [];
+}
+// Saare students ke results display karna
+function displayResults() {
+    resultList.innerHTML = "";
+    for (let student of savedResults) {
+        const card = document.createElement("div");
+        card.className = "student-card";
+
+        const heading = document.createElement("h3");
+        heading.textContent = "Student Result";
+
+        const name = document.createElement("p");
+        name.textContent = "Student Name: " + student.name;
+
+        const total = document.createElement("p");
+        total.textContent = "Total Marks: " + student.totalMarks;
+
+        const obtained = document.createElement("p");
+        obtained.textContent = "Obtained Marks: " + student.obtainedMarks;
+
+        const percentage = document.createElement("p");
+        percentage.textContent = "Percentage: " + student.percentage + "%";
+
+        const grade = document.createElement("p");
+        grade.textContent = "Grade: " + student.grade;
+
+        const status = document.createElement("p");
+        status.textContent = "Status: " + student.status;
+        status.className = student.status === "Pass" ? "pass" : "fail";
+        card.append(
+            heading,
+            name,
+            total,
+            obtained,
+            percentage,
+            grade,
+            status
+        );
+        resultList.appendChild(card);
+    }
+}
+// Page load par results show karna
+displayResults();
+// Form submit hone par result calculate karna
 resultForm.addEventListener("submit", function(event) {
     event.preventDefault();
     const name = document.getElementById("studentName").value.trim();
-    // Sab subjects ke marks Number mein convert karna
-    const english = Number(document.getElementById("english").value);
-    const math = Number(document.getElementById("math").value);
-    const computer = Number(document.getElementById("computer").value);
-    const science = Number(document.getElementById("science").value);
-    const urdu = Number(document.getElementById("urdu").value);
-
-    // Check karna ke koi field empty to nahi
     const inputs = [
         document.getElementById("english"),
         document.getElementById("math"),
@@ -20,33 +67,37 @@ resultForm.addEventListener("submit", function(event) {
         document.getElementById("science"),
         document.getElementById("urdu")
     ];
-    for (let input of inputs) {
-        if (input.value.trim() === "") {
-            message.textContent = "Please enter marks for all subjects.";
-            result.style.display = "none";
-            return;
-        }
-    }
     // Student name validate karna
     if (name === "") {
         message.textContent = "Please enter student name.";
-        result.style.display = "none";
         return;
     }
-    // Marks validate karna
-    const marks = [english, math, computer, science, urdu];
-
-    for (let mark of marks) {
-        if (mark < 0 || mark > 100) {
-            message.textContent = "Marks must be between 0 and 100.";
-            result.style.display = "none";
+    // Check karna ke saare marks enter hue hain
+    for (let input of inputs) {
+        if (input.value.trim() === "") {
+            message.textContent =
+            "Please enter marks for all subjects.";
             return;
         }
     }
-    // Total aur obtained marks calculate karna
+    // String values ko numbers mein convert karna
+    const marks = inputs.map(input => Number(input.value));
+    // Marks ki validation
+    for (let mark of marks) {
+        if (!Number.isFinite(mark) || mark < 0 || mark > 100) {
+            message.textContent =
+            "Marks must be between 0 and 100.";
+            return;
+        }
+    }
+    const english = marks[0];
+    const math = marks[1];
+    const computer = marks[2];
+    const science = marks[3];
+    const urdu = marks[4];
     const totalMarks = 500;
-    const obtainedMarks = english + math + computer + science + urdu;
-    // Percentage calculate karna
+    const obtainedMarks =
+    english + math + computer + science + urdu;
     const percentage = (obtainedMarks / totalMarks) * 100;
     // Grade calculate karna
     let grade;
@@ -63,7 +114,7 @@ resultForm.addEventListener("submit", function(event) {
     } else {
         grade = "F";
     }
-    // Pass ya Fail check karna
+    // Pass ya fail check karna
     let status;
     if (
         english >= 33 &&
@@ -76,17 +127,21 @@ resultForm.addEventListener("submit", function(event) {
     } else {
         status = "Fail";
     }
-    // Result webpage par display karna
-    document.getElementById("showName").textContent = name;
-    document.getElementById("totalMarks").textContent = totalMarks;
-    document.getElementById("obtainedMarks").textContent = obtainedMarks;
-    document.getElementById("percentage").textContent =
-     percentage.toFixed(2) + "%";
-    document.getElementById("grade").textContent = grade;
-    document.getElementById("status").textContent = status;
-    // Pass aur Fail ke colors
-    document.getElementById("status").style.color =
-        status === "Pass" ? "green" : "red";
-    message.textContent = "";
-    result.style.display = "block";
+    // Student ka complete result
+    const studentResult = {
+        name: name,
+        totalMarks: totalMarks,
+        obtainedMarks: obtainedMarks,
+        percentage: percentage.toFixed(2),
+        grade: grade,
+        status: status
+    };
+    // Naye student ko array mein add karna
+    savedResults.push(studentResult);
+    // Updated results show karna
+    displayResults();
+    message.style.color = "green";
+    message.textContent = "Result saved successfully!";
+    // Form clear karna
+    resultForm.reset();
 });
